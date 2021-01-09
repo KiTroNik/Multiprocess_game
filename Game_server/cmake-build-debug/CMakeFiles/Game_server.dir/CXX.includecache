@@ -1,0 +1,30 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/jakub/CLionProjects/Game_server/main.cpp
+ncurses.h
+-
+vector
+-
+semaphore.h
+-
+pthread.h
+-
+fcntl.h
+-
+sys/mman.h
+-
+sys/stat.h
+-
+unistd.h
+-
+iostream
+-
+stdlib.h
+-
+

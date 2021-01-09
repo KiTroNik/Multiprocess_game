@@ -1,0 +1,1 @@
+/usr/bin/c++  -g  -pthread -lrt CMakeFiles/Game_server.dir/main.cpp.o  -o Game_server  -lcurses /usr/lib/x86_64-linux-gnu/libform.so -lrt 
