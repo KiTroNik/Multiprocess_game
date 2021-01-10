@@ -82,7 +82,19 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/home/jakub/CLionProjects/Game_server/labirynth.cpp">
+			<Option target="Game_server"/>
+		</Unit>
+		<Unit filename="/home/jakub/CLionProjects/Game_server/labirynth.h">
+			<Option target="Game_server"/>
+		</Unit>
 		<Unit filename="/home/jakub/CLionProjects/Game_server/main.cpp">
+			<Option target="Game_server"/>
+		</Unit>
+		<Unit filename="/home/jakub/CLionProjects/Game_server/player.cpp">
+			<Option target="Game_server"/>
+		</Unit>
+		<Unit filename="/home/jakub/CLionProjects/Game_server/player.h">
 			<Option target="Game_server"/>
 		</Unit>
 		<Unit filename="/home/jakub/CLionProjects/Game_server/CMakeLists.txt">

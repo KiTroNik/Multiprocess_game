@@ -6,6 +6,12 @@
 
 #IncludeRegexTransform: 
 
+/home/jakub/CLionProjects/Game_server/labirynth.h
+vector
+-
+ncurses.h
+-
+
 /home/jakub/CLionProjects/Game_server/main.cpp
 ncurses.h
 -
@@ -27,4 +33,22 @@ iostream
 -
 stdlib.h
 -
+labirynth.h
+/home/jakub/CLionProjects/Game_server/labirynth.h
+player.h
+/home/jakub/CLionProjects/Game_server/player.h
+
+/home/jakub/CLionProjects/Game_server/player.cpp
+player.h
+/home/jakub/CLionProjects/Game_server/player.h
+
+/home/jakub/CLionProjects/Game_server/player.h
+semaphore.h
+-
+cstdlib
+-
+ctime
+-
+labirynth.h
+/home/jakub/CLionProjects/Game_server/labirynth.h
 

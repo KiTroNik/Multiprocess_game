@@ -143,6 +143,33 @@ Game_server/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Game_server.dir/build.make CMakeFiles/Game_server.dir/build
 .PHONY : Game_server/fast
 
+labirynth.o: labirynth.cpp.o
+
+.PHONY : labirynth.o
+
+# target to build an object file
+labirynth.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Game_server.dir/build.make CMakeFiles/Game_server.dir/labirynth.cpp.o
+.PHONY : labirynth.cpp.o
+
+labirynth.i: labirynth.cpp.i
+
+.PHONY : labirynth.i
+
+# target to preprocess a source file
+labirynth.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Game_server.dir/build.make CMakeFiles/Game_server.dir/labirynth.cpp.i
+.PHONY : labirynth.cpp.i
+
+labirynth.s: labirynth.cpp.s
+
+.PHONY : labirynth.s
+
+# target to generate assembly for a file
+labirynth.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Game_server.dir/build.make CMakeFiles/Game_server.dir/labirynth.cpp.s
+.PHONY : labirynth.cpp.s
+
 main.o: main.cpp.o
 
 .PHONY : main.o
@@ -170,6 +197,33 @@ main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Game_server.dir/build.make CMakeFiles/Game_server.dir/main.cpp.s
 .PHONY : main.cpp.s
 
+player.o: player.cpp.o
+
+.PHONY : player.o
+
+# target to build an object file
+player.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Game_server.dir/build.make CMakeFiles/Game_server.dir/player.cpp.o
+.PHONY : player.cpp.o
+
+player.i: player.cpp.i
+
+.PHONY : player.i
+
+# target to preprocess a source file
+player.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Game_server.dir/build.make CMakeFiles/Game_server.dir/player.cpp.i
+.PHONY : player.cpp.i
+
+player.s: player.cpp.s
+
+.PHONY : player.s
+
+# target to generate assembly for a file
+player.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Game_server.dir/build.make CMakeFiles/Game_server.dir/player.cpp.s
+.PHONY : player.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -179,9 +233,15 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... Game_server"
+	@echo "... labirynth.o"
+	@echo "... labirynth.i"
+	@echo "... labirynth.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
+	@echo "... player.o"
+	@echo "... player.i"
+	@echo "... player.s"
 .PHONY : help
 
 
