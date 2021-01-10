@@ -119,9 +119,16 @@ int main() {
         move(i+1, 0);
     }
 
+    fill_user_map(player_1, player_1->x_pos, player_1->y_pos);
+    fill_user_map(player_2, player_2->x_pos, player_2->y_pos);
+    sem_post(&player_1->sem_2);
+    sem_post(&player_2->sem_2);
+
     //glowna petla gry
     do {
         flushinp(); // czyszczenie bufora
+        player_1->input = 'n';
+        player_2->input = 'n';
 
         display_stats(player_1, player_2);
         mvaddch(player_1->y_pos, player_1->x_pos, player_1->player_icon);
@@ -138,8 +145,6 @@ int main() {
         fill_user_map(player_2, player_2->x_pos, player_2->y_pos);
         sem_post(&player_2->sem_1);
 
-        player_1->input = 'n';
-        player_2->input = 'n';
         player_1->round_number++;
         player_2->round_number++;
 
@@ -201,7 +206,6 @@ int main() {
             default:
                 break;
         }
-
     } while (player_1->input != 'q' && player_2->input != 'q');
 
     endwin();
@@ -230,7 +234,7 @@ void display_stats(struct player_map *p_1, struct player_map *p_2) {
     mvprintw(start_y++, WIDTH+3, "Parameter:   Player1  Player2");
     mvprintw(start_y++, WIDTH+4, "PID         %d     %d", p_1->pid, p_2->pid);
     mvprintw(start_y++, WIDTH+4, "Type        HUMAN    HUMAN");
-    mvprintw(start_y++, WIDTH+4, "Curr X/Y    %d/%d     %d/%d", p_1->x_pos, p_1->y_pos, p_2->x_pos, p_2->y_pos);
+    mvprintw(start_y++, WIDTH+4, "Curr X/Y    %2d/%2d     %2d/%2d", p_1->x_pos, p_1->y_pos, p_2->x_pos, p_2->y_pos);
     mvprintw(start_y++, WIDTH+4, "Deaths      %d        %d", p_1->deaths, p_2->deaths);
     start_y++;
     mvprintw(start_y++, WIDTH+4, "Coins");

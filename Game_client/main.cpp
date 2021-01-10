@@ -15,11 +15,13 @@ using namespace std;
 
 #define WIDTH  50
 
-void display_stats(struct player_map *p_1);
+void display_stats (struct player_map *p_1);
+void *get_input (void *arg);
 
 struct player_map {
     char pl_map[5][5];
     sem_t sem_1;
+    sem_t sem_2;
     sem_t sem_3;
     int input;
     char player_icon;
@@ -112,26 +114,29 @@ int main() {
     sem_post(&p_map->sem_3);
 
     initscr();
+    timeout(1000);
     keypad(stdscr, true);
     noecho();
 
+    sem_wait(&p_map->sem_2);
     while(1) {
         sem_wait(&p_map->sem_1);
-        clear();
+        flushinp(); // czyszczenie bufora
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
                 printw("%c", p_map->pl_map[i][j]);
             }
             move(i+1, 0);
         }
-        display_stats(p_map);
 
+        display_stats(p_map);
         p_map->input = getch();
         if (p_map->input == 'q') break;
     }
 
 
     endwin();
+
     munmap(p_map, sizeof(struct player_map));
     munmap(player_no, sizeof(int));
     sem_close(sem);
@@ -144,11 +149,12 @@ void display_stats(struct player_map *p_1) {
     int start_y = 0;
     mvprintw(start_y++, WIDTH+3, "Server's PID: %d", p_1->server_pid);
     mvprintw(start_y++, WIDTH+4, "Campsite X/Y: 23/11");
+    mvprintw(start_y++, WIDTH+4, "Round number: %d", p_1->round_number);
     start_y++;
     mvprintw(start_y++, WIDTH+3, "Player");
     mvprintw(start_y++, WIDTH+4, "Number:     %c", p_1->player_icon); // todo: zmienic na PID
     mvprintw(start_y++, WIDTH+4, "Type:       HUMAN");
-    mvprintw(start_y++, WIDTH+4, "Curr X/Y    %d/%d", p_1->x_pos, p_1->y_pos);
+    mvprintw(start_y++, WIDTH+4, "Curr X/Y    %2d/%2d", p_1->x_pos, p_1->y_pos);
     mvprintw(start_y++, WIDTH+4, "Deaths      %d", p_1->deaths);
     start_y++;
     mvprintw(start_y++, WIDTH+4, "Coins found %d", p_1->coins_carried);

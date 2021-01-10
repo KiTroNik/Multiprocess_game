@@ -19,6 +19,7 @@ extern const char *shm_name_player_2;
 struct player_map {
     char pl_map[5][5];
     sem_t sem_1;
+    sem_t sem_2;
     sem_t sem_3;
     int input;
     char player_icon;
