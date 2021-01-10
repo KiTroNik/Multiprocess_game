@@ -45,6 +45,8 @@ void create_player(struct player_map *p, char icon) {
     p->coins_carried = 0;
     p->coins_in_camp = 0;
     p->deaths = 0;
+    p->round_number = 0;
+    p->server_pid = getpid();
     draw_resp(p);
 }
 
@@ -54,7 +56,7 @@ void draw_resp(struct player_map *p) {
     while(good_position == 0) {
         x = (rand() % WIDTH);
         y = (rand() % HEIGHT);
-        if (map[x][y] == ' ') good_position = 1;
+        if (map[y][x] == ' ') good_position = 1;
     }
     p->x_pos = x;
     p->y_pos = y;

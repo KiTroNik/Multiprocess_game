@@ -45,6 +45,10 @@ cstdlib
 -
 ctime
 -
+sys/types.h
+-
+unistd.h
+-
 labirynth.h
 /home/jakub/CLionProjects/Game_server/labirynth.h
 

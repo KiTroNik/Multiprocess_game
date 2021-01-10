@@ -14,6 +14,8 @@
 
 using namespace std;
 
+void display_stats(struct player_map *p_1, struct player_map *p_2);
+
 int main() {
     srand(time(NULL));
 
@@ -121,6 +123,7 @@ int main() {
     do {
         flushinp(); // czyszczenie bufora
 
+        display_stats(player_1, player_2);
         mvaddch(player_1->y_pos, player_1->x_pos, player_1->player_icon);
         move(player_1->y_pos, player_1->x_pos);
         refresh();
@@ -137,6 +140,8 @@ int main() {
 
         player_1->input = 'n';
         player_2->input = 'n';
+        player_1->round_number++;
+        player_2->round_number++;
 
         sleep(1);
         switch (player_1->input) {
@@ -145,7 +150,6 @@ int main() {
                     mvaddch(player_1->y_pos, player_1->x_pos, map[player_1->y_pos][player_1->x_pos]); // bylo EMPTY
                     player_1->y_pos = player_1->y_pos - 1;
                 }
-                // tutaj bedzie jesli event
                 break;
             case KEY_DOWN:
                 if ((player_1->y_pos < LINES - 1) && is_move_okay(player_1->y_pos + 1, player_1->x_pos)) {
@@ -197,6 +201,7 @@ int main() {
             default:
                 break;
         }
+
     } while (player_1->input != 'q' && player_2->input != 'q');
 
     endwin();
@@ -214,4 +219,31 @@ int main() {
     munmap(player_2, sizeof(struct player_map));
     munmap(number_of_player, sizeof(int));
     return 0;
+}
+
+void display_stats(struct player_map *p_1, struct player_map *p_2) {
+    int start_y = 1;
+    mvprintw(start_y++, WIDTH+3, "Server's PID: %d", p_1->server_pid);
+    mvprintw(start_y++, WIDTH+4, "Campsite X/Y: 23/11");
+    mvprintw(start_y++, WIDTH+4, "Round number: %d", p_1->round_number);
+    start_y++;
+    mvprintw(start_y++, WIDTH+3, "Parameter:   Player1  Player2");
+    mvprintw(start_y++, WIDTH+4, "PID         %d     %d", p_1->pid, p_2->pid);
+    mvprintw(start_y++, WIDTH+4, "Type        HUMAN    HUMAN");
+    mvprintw(start_y++, WIDTH+4, "Curr X/Y    %d/%d     %d/%d", p_1->x_pos, p_1->y_pos, p_2->x_pos, p_2->y_pos);
+    mvprintw(start_y++, WIDTH+4, "Deaths      %d        %d", p_1->deaths, p_2->deaths);
+    start_y++;
+    mvprintw(start_y++, WIDTH+4, "Coins");
+    mvprintw(start_y++, WIDTH+8, "carried %d        %d", p_1->coins_carried, p_2->coins_carried);
+    mvprintw(start_y++, WIDTH+8, "brought %d        %d", p_1->coins_in_camp, p_2->coins_in_camp);
+    start_y += 3;
+    mvprintw(start_y++, WIDTH+3, "Legend:");
+    mvprintw(start_y++, WIDTH+4, "12   - players");
+    mvprintw(start_y++, WIDTH+4, "#    - wall");
+    mvprintw(start_y++, WIDTH+4, "~    - bushes (slow down)");
+    mvprintw(start_y++, WIDTH+4, "*    - wild beast");
+    mvprintw(start_y++, WIDTH+4, "c    - one coin                  D - dropped treasure");
+    mvprintw(start_y++, WIDTH+4, "t    - treasure (10 coins)");
+    mvprintw(start_y++, WIDTH+4, "T    - large treasure (50 coins)");
+    mvprintw(start_y++, WIDTH+4, "A    - campsite");
 }

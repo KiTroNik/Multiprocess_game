@@ -4,6 +4,8 @@
 #include <semaphore.h>
 #include <cstdlib>
 #include <ctime>
+#include <sys/types.h>
+#include <unistd.h>
 #include "labirynth.h"
 
 using namespace std;
@@ -27,6 +29,9 @@ struct player_map {
     int y_pos;
     int x_resp;
     int y_resp;
+    int round_number;
+    int pid;
+    int server_pid;
 };
 
 void fill_user_map (struct player_map *p, int x, int y);

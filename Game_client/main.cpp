@@ -5,12 +5,17 @@
 #include <fcntl.h>
 #include <sys/mman.h>
 #include <sys/stat.h>
+#include <sys/types.h>
 #include <unistd.h>
 #include <iostream>
 #include <stdlib.h>
 #include <string>
 
 using namespace std;
+
+#define WIDTH  50
+
+void display_stats(struct player_map *p_1);
 
 struct player_map {
     char pl_map[5][5];
@@ -25,6 +30,9 @@ struct player_map {
     int y_pos;
     int x_resp;
     int y_resp;
+    int round_number;
+    int pid;
+    int server_pid;
 };
 
 int main() {
@@ -100,6 +108,7 @@ int main() {
         return -1;
     }
 
+    p_map->pid = getpid();
     sem_post(&p_map->sem_3);
 
     initscr();
@@ -115,6 +124,7 @@ int main() {
             }
             move(i+1, 0);
         }
+        display_stats(p_map);
 
         p_map->input = getch();
         if (p_map->input == 'q') break;
@@ -127,4 +137,30 @@ int main() {
     sem_close(sem);
     sem_close(sem_num_of_player);
     return 0;
+}
+
+
+void display_stats(struct player_map *p_1) {
+    int start_y = 0;
+    mvprintw(start_y++, WIDTH+3, "Server's PID: %d", p_1->server_pid);
+    mvprintw(start_y++, WIDTH+4, "Campsite X/Y: 23/11");
+    start_y++;
+    mvprintw(start_y++, WIDTH+3, "Player");
+    mvprintw(start_y++, WIDTH+4, "Number:     %c", p_1->player_icon); // todo: zmienic na PID
+    mvprintw(start_y++, WIDTH+4, "Type:       HUMAN");
+    mvprintw(start_y++, WIDTH+4, "Curr X/Y    %d/%d", p_1->x_pos, p_1->y_pos);
+    mvprintw(start_y++, WIDTH+4, "Deaths      %d", p_1->deaths);
+    start_y++;
+    mvprintw(start_y++, WIDTH+4, "Coins found %d", p_1->coins_carried);
+    mvprintw(start_y++, WIDTH+4, "Coins brought %d", p_1->coins_in_camp);
+    start_y += 3;
+    mvprintw(start_y++, WIDTH+3, "Legend:");
+    mvprintw(start_y++, WIDTH+4, "12   - players");
+    mvprintw(start_y++, WIDTH+4, "#    - wall");
+    mvprintw(start_y++, WIDTH+4, "~    - bushes (slow down)");
+    mvprintw(start_y++, WIDTH+4, "*    - wild beast");
+    mvprintw(start_y++, WIDTH+4, "c    - one coin                  D - dropped treasure");
+    mvprintw(start_y++, WIDTH+4, "t    - treasure (10 coins)");
+    mvprintw(start_y++, WIDTH+4, "T    - large treasure (50 coins)");
+    mvprintw(start_y++, WIDTH+4, "A    - campsite");
 }
