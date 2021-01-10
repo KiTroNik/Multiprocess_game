@@ -40,7 +40,6 @@ void fill_user_map(struct player_map *p, int x, int y) {
 
 void create_player(struct player_map *p, char icon) {
     sem_init(&p->sem_1, 1, 0);
-    sem_init(&p->sem_2, 1, 0);
     sem_init(&p->sem_3, 1, 0);
     p->player_icon = icon;
     p->coins_carried = 0;
@@ -65,6 +64,5 @@ void draw_resp(struct player_map *p) {
 
 void destroy_semaphores (struct player_map *p) {
     sem_destroy(&p->sem_1);
-    sem_destroy(&p->sem_2);
     sem_destroy(&p->sem_3);
 }

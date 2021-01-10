@@ -119,8 +119,14 @@ int main() {
 
     //glowna petla gry
     do {
+        flushinp(); // czyszczenie bufora
+
         mvaddch(player_1->y_pos, player_1->x_pos, player_1->player_icon);
         move(player_1->y_pos, player_1->x_pos);
+        refresh();
+
+        mvaddch(player_2->y_pos, player_2->x_pos, player_2->player_icon);
+        move(player_2->y_pos, player_2->x_pos);
         refresh();
 
         fill_user_map(player_1, player_1->x_pos, player_1->y_pos);
@@ -129,18 +135,17 @@ int main() {
         fill_user_map(player_2, player_2->x_pos, player_2->y_pos);
         sem_post(&player_2->sem_1);
 
-        mvaddch(player_2->y_pos, player_2->x_pos, player_2->player_icon);
-        move(player_2->y_pos, player_2->x_pos);
-        refresh();
+        player_1->input = 'n';
+        player_2->input = 'n';
 
-        sem_wait(&player_1->sem_2);
-        sem_wait(&player_2->sem_2);
+        sleep(1);
         switch (player_1->input) {
             case KEY_UP:
                 if ((player_1->y_pos > 0) && is_move_okay(player_1->y_pos - 1, player_1->x_pos)) {
                     mvaddch(player_1->y_pos, player_1->x_pos, map[player_1->y_pos][player_1->x_pos]); // bylo EMPTY
                     player_1->y_pos = player_1->y_pos - 1;
                 }
+                // tutaj bedzie jesli event
                 break;
             case KEY_DOWN:
                 if ((player_1->y_pos < LINES - 1) && is_move_okay(player_1->y_pos + 1, player_1->x_pos)) {
@@ -192,7 +197,7 @@ int main() {
             default:
                 break;
         }
-    } while (player_1->input != 'q');
+    } while (player_1->input != 'q' && player_2->input != 'q');
 
     endwin();
 

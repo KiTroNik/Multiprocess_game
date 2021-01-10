@@ -38,10 +38,6 @@ labirynth.h
 player.h
 /home/jakub/CLionProjects/Game_server/player.h
 
-/home/jakub/CLionProjects/Game_server/player.cpp
-player.h
-/home/jakub/CLionProjects/Game_server/player.h
-
 /home/jakub/CLionProjects/Game_server/player.h
 semaphore.h
 -

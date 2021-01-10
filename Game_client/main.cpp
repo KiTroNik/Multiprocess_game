@@ -15,7 +15,6 @@ using namespace std;
 struct player_map {
     char pl_map[5][5];
     sem_t sem_1;
-    sem_t sem_2;
     sem_t sem_3;
     int input;
     char player_icon;
@@ -110,17 +109,14 @@ int main() {
     while(1) {
         sem_wait(&p_map->sem_1);
         clear();
-        for (int i = 0; i < 5; i++)
-        {
-            for (int j = 0; j < 5; j++)
-            {
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
                 printw("%c", p_map->pl_map[i][j]);
             }
             move(i+1, 0);
         }
 
         p_map->input = getch();
-        sem_post(&p_map->sem_2);
         if (p_map->input == 'q') break;
     }
 
