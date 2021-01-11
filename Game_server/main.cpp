@@ -146,27 +146,35 @@ int main() {
         sleep(1);
         switch (player_1->input) {
             case KEY_UP:
-                if ((player_1->y_pos > 0) && is_move_okay(player_1->y_pos - 1, player_1->x_pos)) {
-                    mvaddch(player_1->y_pos, player_1->x_pos, map[player_1->y_pos][player_1->x_pos]); // bylo EMPTY
+                if (is_move_okay(player_1->y_pos - 1, player_1->x_pos)) {
+                    mvaddch(player_1->y_pos, player_1->x_pos, EMPTY); // bylo EMPTY
+                    map[player_1->y_pos][player_1->x_pos] = ' ';
                     player_1->y_pos = player_1->y_pos - 1;
+                    map[player_1->y_pos][player_1->x_pos] = player_1->player_icon;
                 }
                 break;
             case KEY_DOWN:
-                if ((player_1->y_pos < LINES - 1) && is_move_okay(player_1->y_pos + 1, player_1->x_pos)) {
-                    mvaddch(player_1->y_pos, player_1->x_pos, map[player_1->y_pos][player_1->x_pos]);
+                if (is_move_okay(player_1->y_pos + 1, player_1->x_pos)) {
+                    mvaddch(player_1->y_pos, player_1->x_pos, EMPTY);
+                    map[player_1->y_pos][player_1->x_pos] = ' ';
                     player_1->y_pos = player_1->y_pos + 1;
+                    map[player_1->y_pos][player_1->x_pos] = player_1->player_icon;
                 }
                 break;
             case KEY_LEFT:
-                if ((player_1->x_pos > 0) && is_move_okay(player_1->y_pos, player_1->x_pos - 1)) {
-                    mvaddch(player_1->y_pos, player_1->x_pos, map[player_1->y_pos][player_1->x_pos]);
+                if (is_move_okay(player_1->y_pos, player_1->x_pos - 1)) {
+                    mvaddch(player_1->y_pos, player_1->x_pos, EMPTY);
+                    map[player_1->y_pos][player_1->x_pos] = ' ';
                     player_1->x_pos = player_1->x_pos - 1;
+                    map[player_1->y_pos][player_1->x_pos] = player_1->player_icon;
                 }
                 break;
             case KEY_RIGHT:
-                if ((player_1->x_pos < COLS - 1) && is_move_okay(player_1->y_pos, player_1->x_pos + 1)) {
-                    mvaddch(player_1->y_pos, player_1->x_pos, map[player_1->y_pos][player_1->x_pos]);
+                if (is_move_okay(player_1->y_pos, player_1->x_pos + 1)) {
+                    mvaddch(player_1->y_pos, player_1->x_pos, EMPTY);
+                    map[player_1->y_pos][player_1->x_pos] = ' ';
                     player_1->x_pos = player_1->x_pos + 1;
+                    map[player_1->y_pos][player_1->x_pos] = player_1->player_icon;
                 }
                 break;
             default:
@@ -175,27 +183,35 @@ int main() {
 
         switch (player_2->input) {
             case KEY_UP:
-                if ((player_2->y_pos > 0) && is_move_okay(player_2->y_pos - 1, player_2->x_pos)) {
-                    mvaddch(player_2->y_pos, player_2->x_pos, map[player_2->y_pos][player_2->x_pos]); // bylo EMPTY
+                if (is_move_okay(player_2->y_pos - 1, player_2->x_pos)) {
+                    mvaddch(player_2->y_pos, player_2->x_pos, EMPTY);
+                    map[player_2->y_pos][player_2->x_pos] = ' ';
                     player_2->y_pos = player_2->y_pos - 1;
+                    map[player_2->y_pos][player_2->x_pos] = player_2->player_icon;
                 }
                 break;
             case KEY_DOWN:
-                if ((player_2->y_pos < LINES - 1) && is_move_okay(player_2->y_pos + 1, player_2->x_pos)) {
-                    mvaddch(player_2->y_pos, player_2->x_pos, map[player_2->y_pos][player_2->x_pos]);
+                if (is_move_okay(player_2->y_pos + 1, player_2->x_pos)) {
+                    mvaddch(player_2->y_pos, player_2->x_pos, EMPTY);
+                    map[player_2->y_pos][player_2->x_pos] = ' ';
                     player_2->y_pos = player_2->y_pos + 1;
+                    map[player_2->y_pos][player_2->x_pos] = player_2->player_icon;
                 }
                 break;
             case KEY_LEFT:
-                if ((player_2->x_pos > 0) && is_move_okay(player_2->y_pos, player_2->x_pos - 1)) {
-                    mvaddch(player_2->y_pos, player_2->x_pos, map[player_2->y_pos][player_2->x_pos]);
+                if (is_move_okay(player_2->y_pos, player_2->x_pos - 1)) {
+                    mvaddch(player_2->y_pos, player_2->x_pos, EMPTY);
+                    map[player_2->y_pos][player_2->x_pos] = ' ';
                     player_2->x_pos = player_2->x_pos - 1;
+                    map[player_2->y_pos][player_2->x_pos] = player_2->player_icon;
                 }
                 break;
             case KEY_RIGHT:
-                if ((player_2->x_pos < COLS - 1) && is_move_okay(player_2->y_pos, player_2->x_pos + 1)) {
-                    mvaddch(player_2->y_pos, player_2->x_pos, map[player_2->y_pos][player_2->x_pos]);
+                if (is_move_okay(player_2->y_pos, player_2->x_pos + 1)) {
+                    mvaddch(player_2->y_pos, player_2->x_pos, EMPTY);
+                    map[player_2->y_pos][player_2->x_pos] = ' ';
                     player_2->x_pos = player_2->x_pos + 1;
+                    map[player_2->y_pos][player_2->x_pos] = player_2->player_icon;
                 }
                 break;
             default:

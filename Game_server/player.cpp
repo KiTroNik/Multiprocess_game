@@ -21,7 +21,7 @@ void fill_user_map(struct player_map *p, int x, int y) {
 
     p->pl_map[2][0] = (x - 2 < 0) ? ' ' : map[y][x - 2];
     p->pl_map[2][1] = (x - 1 < 0) ? ' ' : map[y][x - 1];
-    p->pl_map[2][2] = p->player_icon;
+    p->pl_map[2][2] = map[y][x];
     p->pl_map[2][3] = (x + 1 > WIDTH) ? ' ' : map[y][x + 1];
     p->pl_map[2][4] = (x + 2 > WIDTH) ? ' ' : map[y][x + 2];
 
@@ -50,6 +50,7 @@ void create_player(struct player_map *p, char icon) {
     p->is_end = 0;
     p->server_pid = getpid();
     draw_resp(p);
+    map[p->y_pos][p->x_pos] = icon;
 }
 
 void draw_resp(struct player_map *p) {
@@ -58,7 +59,7 @@ void draw_resp(struct player_map *p) {
     while(good_position == 0) {
         x = (rand() % WIDTH);
         y = (rand() % HEIGHT);
-        if (map[y][x] == ' ') good_position = 1;
+        if (map[y][x] == EMPTY) good_position = 1;
     }
     p->x_pos = x;
     p->y_pos = y;
