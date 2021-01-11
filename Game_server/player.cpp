@@ -73,7 +73,7 @@ void destroy_semaphores (struct player_map *p) {
     sem_destroy(&p->sem_3);
 }
 
-void handle_player_move(struct player_map *p) {
+void handle_player_move(struct player_map *p, struct player_map *p2) {
     switch (p->input) {
         case KEY_UP:
             if (is_move_okay(p->y_pos - 1, p->x_pos)) {
@@ -83,7 +83,9 @@ void handle_player_move(struct player_map *p) {
             } else if (is_move_coin(p->y_pos - 1, p->x_pos)) {
                 handle_coin_move(p, p->x_pos, p->y_pos - 1);
             } else if (is_move_camp(p->y_pos - 1, p->x_pos)) {
-                handle_camp_move(p);
+                handle_camp_move(p, p->x_pos, p->y_pos - 1);
+            } else if (is_move_other_player(p->y_pos - 1, p->x_pos, p2->player_icon)) {
+                handle_col_of_players(p, p2);
             }
             break;
         case KEY_DOWN:
@@ -94,7 +96,9 @@ void handle_player_move(struct player_map *p) {
             } else if (is_move_coin(p->y_pos + 1, p->x_pos)) {
                 handle_coin_move(p, p->x_pos, p->y_pos + 1);
             } else if (is_move_camp(p->y_pos + 1, p->x_pos)) {
-                handle_camp_move(p);
+                handle_camp_move(p, p->x_pos, p->y_pos + 1);
+            } else if (is_move_other_player(p->y_pos + 1, p->x_pos, p2->player_icon)) {
+                handle_col_of_players(p, p2);
             }
             break;
         case KEY_LEFT:
@@ -105,7 +109,9 @@ void handle_player_move(struct player_map *p) {
             } else if (is_move_coin(p->y_pos, p->x_pos - 1)) {
                 handle_coin_move(p, p->x_pos - 1, p->y_pos);
             } else if (is_move_camp(p->y_pos, p->x_pos - 1)) {
-                handle_camp_move(p);
+                handle_camp_move(p, p->x_pos - 1, p->y_pos);
+            } else if (is_move_other_player(p->y_pos, p->x_pos - 1, p2->player_icon)) {
+                handle_col_of_players(p, p2);
             }
             break;
         case KEY_RIGHT:
@@ -116,7 +122,9 @@ void handle_player_move(struct player_map *p) {
             } else if (is_move_coin(p->y_pos, p->x_pos + 1)) {
                 handle_coin_move(p, p->x_pos + 1, p->y_pos);
             } else if (is_move_camp(p->y_pos, p->x_pos + 1)) {
-                handle_camp_move(p);
+                handle_camp_move(p, p->x_pos + 1, p->y_pos);
+            } else if (is_move_other_player(p->y_pos, p->x_pos + 1, p2->player_icon)) {
+                handle_col_of_players(p, p2);
             }
             break;
         default:
@@ -155,7 +163,35 @@ void handle_coin_move (struct player_map *p, int new_x, int new_y) {
     map[p->y_pos][p->x_pos] = p->player_icon;
 }
 
-void handle_camp_move (struct player_map *p) {
+void handle_camp_move (struct player_map *p, int new_x, int new_y) {
     p->coins_in_camp += p->coins_carried;
     p->coins_carried = 0;
+
+    mvaddch(p->y_pos, p->x_pos, map_for_check[p->y_pos][p->x_pos]);
+    map[p->y_pos][p->x_pos] = map_for_check[p->y_pos][p->x_pos];
+    p->y_pos = new_y;
+    p->x_pos = new_x;
+    map[p->y_pos][p->x_pos] = p->player_icon;
+}
+
+void handle_col_of_players (struct player_map *p, struct player_map *p2) {
+    map_of_coins[p2->y_pos][p2->x_pos] = p->coins_carried + p2->coins_carried;
+    p->coins_carried = 0;
+    p2->coins_carried = 0;
+    p->deaths += 1;
+    p2->deaths += 1;
+
+    mvaddch(p->y_pos, p->x_pos, ' ');
+    map[p->y_pos][p->x_pos] = map_for_check[p->y_pos][p->x_pos];
+
+    mvaddch(p2->y_pos, p2->x_pos, 'D');
+    map[p2->y_pos][p2->x_pos] = 'D';
+
+    p->y_pos = p->y_resp;
+    p->x_pos = p->x_resp;
+    map[p->y_pos][p->x_pos] = p->player_icon;
+
+    p2->y_pos = p2->y_resp;
+    p2->x_pos = p2->x_resp;
+    map[p2->y_pos][p2->x_pos] = p2->player_icon;
 }

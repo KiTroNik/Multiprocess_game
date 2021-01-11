@@ -143,8 +143,8 @@ int main() {
 
         serv_input = getch();
         handle_server_move(serv_input);
-        handle_player_move(player_1);
-        handle_player_move(player_2);
+        handle_player_move(player_1, player_2);
+        handle_player_move(player_2, player_1);
 
     } while (player_1->input != 'q' && player_2->input != 'q' && serv_input != 'q');
 

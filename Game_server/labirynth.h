@@ -26,6 +26,7 @@ int is_move_okay (int y, int x);
 int is_move_bushes (int y, int x);
 int is_move_coin (int y, int x);
 int is_move_camp (int y, int x);
+int is_move_other_player (int y, int x, char icon);
 void display_stats (struct player_map *p_1, struct player_map *p_2);
 void display_map ();
 

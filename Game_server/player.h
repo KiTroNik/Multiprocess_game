@@ -40,10 +40,11 @@ void fill_user_map (struct player_map *p, int x, int y);
 void create_player (struct player_map *p, char icon);
 void draw_resp (struct player_map *p);
 void destroy_semaphores (struct player_map *p);
-void handle_player_move(struct player_map *p);
+void handle_player_move(struct player_map *p, struct player_map *p2);
 void handle_okay_move (struct player_map *p, int new_x, int new_y);
 void handle_bushes_move (struct player_map *p, int new_x, int new_y);
 void handle_coin_move (struct player_map *p, int new_x, int new_y);
-void handle_camp_move (struct player_map *p);
+void handle_camp_move (struct player_map *p, int new_x, int new_y);
+void handle_col_of_players (struct player_map *p, struct player_map *p2);
 
 #endif //GAME_SERVER_PLAYER_H

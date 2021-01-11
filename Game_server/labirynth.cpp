@@ -103,6 +103,10 @@ int is_move_camp (int y, int x) {
     return ((mvinch(y, x) & A_CHARTEXT) == CAMP);
 }
 
+int is_move_other_player (int y, int x, char icon) {
+    return ((mvinch(y, x) & A_CHARTEXT) == icon);
+}
+
 void display_map() {
     for (int i = 0; i < HEIGHT+1; i++) {
         for (int j = 0; j < WIDTH+1; j++) {
@@ -125,8 +129,8 @@ void display_stats(struct player_map *p_1, struct player_map *p_2) {
     mvprintw(start_y++, WIDTH+4, "Deaths      %d        %d", p_1->deaths, p_2->deaths);
     start_y++;
     mvprintw(start_y++, WIDTH+4, "Coins");
-    mvprintw(start_y++, WIDTH+8, "carried %d        %d", p_1->coins_carried, p_2->coins_carried);
-    mvprintw(start_y++, WIDTH+8, "brought %d        %d", p_1->coins_in_camp, p_2->coins_in_camp);
+    mvprintw(start_y++, WIDTH+8, "carried %2d        %2d", p_1->coins_carried, p_2->coins_carried);
+    mvprintw(start_y++, WIDTH+8, "brought %2d        %2d", p_1->coins_in_camp, p_2->coins_in_camp);
     start_y += 3;
     mvprintw(start_y++, WIDTH+3, "Legend:");
     mvprintw(start_y++, WIDTH+4, "12   - players");
