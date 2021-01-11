@@ -3,12 +3,12 @@
 
 #include <vector>
 #include <ncurses.h>
+#include "player.h"
 
 using namespace std;
 
 #define EMPTY  ' '
 #define BUSHES '~'
-#define WALL '#'
 #define HEIGHT 24
 #define WIDTH  50
 
@@ -18,5 +18,7 @@ extern int map_of_bushes[HEIGHT + 1][WIDTH + 1];
 
 int is_move_okay(int y, int x);
 int is_move_bushes(int y, int x);
+void display_stats(struct player_map *p_1, struct player_map *p_2);
+void display_map();
 
 #endif //GAME_SERVER_LABIRYNTH_H

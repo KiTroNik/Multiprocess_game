@@ -3,6 +3,7 @@
 
 CMakeFiles/Game_server.dir/labirynth.cpp.o: ../labirynth.cpp
 CMakeFiles/Game_server.dir/labirynth.cpp.o: ../labirynth.h
+CMakeFiles/Game_server.dir/labirynth.cpp.o: ../player.h
 
 CMakeFiles/Game_server.dir/main.cpp.o: ../labirynth.h
 CMakeFiles/Game_server.dir/main.cpp.o: ../main.cpp

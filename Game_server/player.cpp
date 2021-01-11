@@ -72,3 +72,59 @@ void destroy_semaphores (struct player_map *p) {
     sem_destroy(&p->sem_2);
     sem_destroy(&p->sem_3);
 }
+
+void handle_player_move(struct player_map *p) {
+    switch (p->input) {
+        case KEY_UP:
+            if (is_move_okay(p->y_pos - 1, p->x_pos)) {
+                handle_okay_move(p, p->x_pos, p->y_pos - 1);
+            } else if (is_move_bushes(p->y_pos - 1, p->x_pos)) {
+                handle_bushes_move(p, p->x_pos, p->y_pos - 1);
+            }
+            break;
+        case KEY_DOWN:
+            if (is_move_okay(p->y_pos + 1, p->x_pos)) {
+                handle_okay_move(p, p->x_pos, p->y_pos + 1);
+            } else if (is_move_bushes(p->y_pos + 1, p->x_pos)) {
+                handle_bushes_move(p, p->x_pos, p->y_pos + 1);
+            }
+            break;
+        case KEY_LEFT:
+            if (is_move_okay(p->y_pos, p->x_pos - 1)) {
+                handle_okay_move(p, p->x_pos - 1, p->y_pos);
+            } else if (is_move_bushes(p->y_pos, p->x_pos - 1)) {
+                handle_bushes_move(p, p->x_pos - 1, p->y_pos);
+            }
+            break;
+        case KEY_RIGHT:
+            if (is_move_okay(p->y_pos, p->x_pos + 1)) {
+                handle_okay_move(p, p->x_pos + 1, p->y_pos);
+            } else if (is_move_bushes(p->y_pos, p->x_pos + 1)) {
+                handle_bushes_move(p, p->x_pos + 1, p->y_pos);
+            }
+            break;
+        default:
+            break;
+    }
+}
+
+void handle_okay_move (struct player_map *p, int new_x, int new_y) {
+    mvaddch(p->y_pos, p->x_pos, map_for_check[p->y_pos][p->x_pos]);
+    map[p->y_pos][p->x_pos] = map_for_check[p->y_pos][p->x_pos];
+    p->y_pos = new_y;
+    p->x_pos = new_x;
+    map[p->y_pos][p->x_pos] = p->player_icon;
+}
+
+void handle_bushes_move (struct player_map *p, int new_x, int new_y) {
+    if (map_of_bushes[new_y][new_x] == 0) {
+        map_of_bushes[new_y][new_x]++;
+    } else {
+        map_of_bushes[new_y][new_x] = 0;
+        mvaddch(p->y_pos, p->x_pos, map_for_check[p->y_pos][p->x_pos]);
+        map[p->y_pos][p->x_pos] = map_for_check[p->y_pos][p->x_pos];
+        p->y_pos = new_y;
+        p->x_pos = new_x;
+        map[p->y_pos][p->x_pos] = p->player_icon;
+    }
+}

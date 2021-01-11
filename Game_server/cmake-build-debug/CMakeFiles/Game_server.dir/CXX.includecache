@@ -11,6 +11,8 @@ vector
 -
 ncurses.h
 -
+player.h
+/home/jakub/CLionProjects/Game_server/player.h
 
 /home/jakub/CLionProjects/Game_server/main.cpp
 ncurses.h
