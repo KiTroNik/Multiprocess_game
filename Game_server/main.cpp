@@ -240,34 +240,89 @@ int main() {
         switch (player_2->input) {
             case KEY_UP:
                 if (is_move_okay(player_2->y_pos - 1, player_2->x_pos)) {
-                    mvaddch(player_2->y_pos, player_2->x_pos, EMPTY);
-                    map[player_2->y_pos][player_2->x_pos] = ' ';
+
+                    mvaddch(player_2->y_pos, player_2->x_pos, map_for_check[player_2->y_pos][player_2->x_pos]);
+                    map[player_2->y_pos][player_2->x_pos] = map_for_check[player_2->y_pos][player_2->x_pos];
                     player_2->y_pos = player_2->y_pos - 1;
                     map[player_2->y_pos][player_2->x_pos] = player_2->player_icon;
+
+                } else if (is_move_bushes(player_2->y_pos - 1, player_2->x_pos)) {
+
+                    if (map_of_bushes[player_2->y_pos - 1][player_2->x_pos] == 0) {
+                        map_of_bushes[player_2->y_pos - 1][player_2->x_pos]++;
+                    } else {
+                        map_of_bushes[player_2->y_pos - 1][player_2->x_pos] = 0;
+                        mvaddch(player_2->y_pos, player_2->x_pos, map_for_check[player_2->y_pos][player_2->x_pos]);
+                        map[player_2->y_pos][player_2->x_pos] = map_for_check[player_2->y_pos][player_2->x_pos];
+                        player_2->y_pos = player_2->y_pos - 1;
+                        map[player_2->y_pos][player_2->x_pos] = player_2->player_icon;
+                    }
+
                 }
                 break;
             case KEY_DOWN:
                 if (is_move_okay(player_2->y_pos + 1, player_2->x_pos)) {
-                    mvaddch(player_2->y_pos, player_2->x_pos, EMPTY);
-                    map[player_2->y_pos][player_2->x_pos] = ' ';
+
+                    mvaddch(player_2->y_pos, player_2->x_pos, map_for_check[player_2->y_pos][player_2->x_pos]);
+                    map[player_2->y_pos][player_2->x_pos] = map_for_check[player_2->y_pos][player_2->x_pos];
                     player_2->y_pos = player_2->y_pos + 1;
                     map[player_2->y_pos][player_2->x_pos] = player_2->player_icon;
+
+                } else if (is_move_bushes(player_2->y_pos + 1, player_2->x_pos)) {
+
+                    if (map_of_bushes[player_2->y_pos + 1][player_2->x_pos] == 0) {
+                        map_of_bushes[player_2->y_pos + 1][player_2->x_pos]++;
+                    } else {
+                        map_of_bushes[player_2->y_pos + 1][player_2->x_pos] = 0;
+                        mvaddch(player_2->y_pos, player_2->x_pos, map_for_check[player_2->y_pos][player_2->x_pos]);
+                        map[player_2->y_pos][player_2->x_pos] = map_for_check[player_2->y_pos][player_2->x_pos];
+                        player_2->y_pos = player_2->y_pos + 1;
+                        map[player_2->y_pos][player_2->x_pos] = player_2->player_icon;
+                    }
+
                 }
                 break;
             case KEY_LEFT:
                 if (is_move_okay(player_2->y_pos, player_2->x_pos - 1)) {
-                    mvaddch(player_2->y_pos, player_2->x_pos, EMPTY);
-                    map[player_2->y_pos][player_2->x_pos] = ' ';
+
+                    mvaddch(player_2->y_pos, player_2->x_pos, map_for_check[player_2->y_pos][player_2->x_pos]);
+                    map[player_2->y_pos][player_2->x_pos] = map_for_check[player_2->y_pos][player_2->x_pos];
                     player_2->x_pos = player_2->x_pos - 1;
                     map[player_2->y_pos][player_2->x_pos] = player_2->player_icon;
+
+                } else if (is_move_bushes(player_2->y_pos, player_2->x_pos - 1)) {
+
+                    if (map_of_bushes[player_2->y_pos][player_2->x_pos - 1] == 0) {
+                        map_of_bushes[player_2->y_pos][player_2->x_pos - 1]++;
+                    } else {
+                        map_of_bushes[player_2->y_pos][player_2->x_pos - 1] = 0;
+                        mvaddch(player_2->y_pos, player_2->x_pos, map_for_check[player_2->y_pos][player_2->x_pos]);
+                        map[player_2->y_pos][player_2->x_pos] = map_for_check[player_2->y_pos][player_2->x_pos];
+                        player_2->x_pos = player_2->x_pos - 1;
+                        map[player_2->y_pos][player_2->x_pos] = player_2->player_icon;
+                    }
+
                 }
                 break;
             case KEY_RIGHT:
                 if (is_move_okay(player_2->y_pos, player_2->x_pos + 1)) {
-                    mvaddch(player_2->y_pos, player_2->x_pos, EMPTY);
-                    map[player_2->y_pos][player_2->x_pos] = ' ';
+
+                    mvaddch(player_2->y_pos, player_2->x_pos, map_for_check[player_2->y_pos][player_2->x_pos]);
+                    map[player_2->y_pos][player_2->x_pos] = map_for_check[player_2->y_pos][player_2->x_pos];
                     player_2->x_pos = player_2->x_pos + 1;
                     map[player_2->y_pos][player_2->x_pos] = player_2->player_icon;
+
+                } else if (is_move_bushes(player_2->y_pos, player_2->x_pos + 1)) {
+
+                    if (map_of_bushes[player_2->y_pos][player_2->x_pos + 1] == 0) {
+                        map_of_bushes[player_2->y_pos][player_2->x_pos + 1]++;
+                    } else {
+                        map_of_bushes[player_2->y_pos][player_2->x_pos + 1] = 0;
+                        mvaddch(player_2->y_pos, player_2->x_pos, map_for_check[player_2->y_pos][player_2->x_pos]);
+                        map[player_2->y_pos][player_2->x_pos] = map_for_check[player_2->y_pos][player_2->x_pos];
+                        player_2->x_pos = player_2->x_pos + 1;
+                        map[player_2->y_pos][player_2->x_pos] = player_2->player_icon;
+                    }
                 }
                 break;
             default:
