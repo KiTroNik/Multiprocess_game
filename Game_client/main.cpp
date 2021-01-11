@@ -35,6 +35,7 @@ struct player_map {
     int round_number;
     int pid;
     int server_pid;
+    int is_end;
 };
 
 int main() {
@@ -118,10 +119,13 @@ int main() {
     keypad(stdscr, true);
     noecho();
 
-    sem_wait(&p_map->sem_2);
     while(1) {
+        if (p_map->is_end == 1) break;
+        sem_post(&p_map->sem_2);
+
         sem_wait(&p_map->sem_1);
-        flushinp(); // czyszczenie bufora
+        flushinp();
+        clear();
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
                 printw("%c", p_map->pl_map[i][j]);
@@ -168,5 +172,5 @@ void display_stats(struct player_map *p_1) {
     mvprintw(start_y++, WIDTH+4, "c    - one coin                  D - dropped treasure");
     mvprintw(start_y++, WIDTH+4, "t    - treasure (10 coins)");
     mvprintw(start_y++, WIDTH+4, "T    - large treasure (50 coins)");
-    mvprintw(start_y++, WIDTH+4, "A    - campsite");
+    mvprintw(start_y, WIDTH+4, "A    - campsite");
 }

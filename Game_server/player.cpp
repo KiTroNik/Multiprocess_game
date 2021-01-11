@@ -47,6 +47,7 @@ void create_player(struct player_map *p, char icon) {
     p->coins_in_camp = 0;
     p->deaths = 0;
     p->round_number = 0;
+    p->is_end = 0;
     p->server_pid = getpid();
     draw_resp(p);
 }

@@ -33,6 +33,7 @@ struct player_map {
     int round_number;
     int pid;
     int server_pid;
+    int is_end;
 };
 
 void fill_user_map (struct player_map *p, int x, int y);

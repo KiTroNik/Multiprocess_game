@@ -119,14 +119,9 @@ int main() {
         move(i+1, 0);
     }
 
-    fill_user_map(player_1, player_1->x_pos, player_1->y_pos);
-    fill_user_map(player_2, player_2->x_pos, player_2->y_pos);
-    sem_post(&player_1->sem_2);
-    sem_post(&player_2->sem_2);
-
     //glowna petla gry
     do {
-        flushinp(); // czyszczenie bufora
+        flushinp();
         player_1->input = 'n';
         player_2->input = 'n';
 
@@ -207,6 +202,14 @@ int main() {
                 break;
         }
     } while (player_1->input != 'q' && player_2->input != 'q');
+
+    if (player_1->input == 'q') {
+        sem_wait(&player_2->sem_2);
+        player_2->is_end = 1;
+    } else if (player_2->input == 'q') {
+        sem_wait(&player_1->sem_2);
+        player_1->is_end = 1;
+    }
 
     endwin();
 
