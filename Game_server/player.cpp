@@ -80,6 +80,8 @@ void handle_player_move(struct player_map *p) {
                 handle_okay_move(p, p->x_pos, p->y_pos - 1);
             } else if (is_move_bushes(p->y_pos - 1, p->x_pos)) {
                 handle_bushes_move(p, p->x_pos, p->y_pos - 1);
+            } else if (is_move_coin(p->y_pos - 1, p->x_pos)) {
+                handle_coin_move(p, p->x_pos, p->y_pos - 1);
             }
             break;
         case KEY_DOWN:
@@ -87,6 +89,8 @@ void handle_player_move(struct player_map *p) {
                 handle_okay_move(p, p->x_pos, p->y_pos + 1);
             } else if (is_move_bushes(p->y_pos + 1, p->x_pos)) {
                 handle_bushes_move(p, p->x_pos, p->y_pos + 1);
+            } else if (is_move_coin(p->y_pos + 1, p->x_pos)) {
+                handle_coin_move(p, p->x_pos, p->y_pos + 1);
             }
             break;
         case KEY_LEFT:
@@ -94,6 +98,8 @@ void handle_player_move(struct player_map *p) {
                 handle_okay_move(p, p->x_pos - 1, p->y_pos);
             } else if (is_move_bushes(p->y_pos, p->x_pos - 1)) {
                 handle_bushes_move(p, p->x_pos - 1, p->y_pos);
+            } else if (is_move_coin(p->y_pos, p->x_pos - 1)) {
+                handle_coin_move(p, p->x_pos - 1, p->y_pos);
             }
             break;
         case KEY_RIGHT:
@@ -101,6 +107,8 @@ void handle_player_move(struct player_map *p) {
                 handle_okay_move(p, p->x_pos + 1, p->y_pos);
             } else if (is_move_bushes(p->y_pos, p->x_pos + 1)) {
                 handle_bushes_move(p, p->x_pos + 1, p->y_pos);
+            } else if (is_move_coin(p->y_pos, p->x_pos + 1)) {
+                handle_coin_move(p, p->x_pos + 1, p->y_pos);
             }
             break;
         default:
@@ -127,4 +135,14 @@ void handle_bushes_move (struct player_map *p, int new_x, int new_y) {
         p->x_pos = new_x;
         map[p->y_pos][p->x_pos] = p->player_icon;
     }
+}
+
+void handle_coin_move (struct player_map *p, int new_x, int new_y) {
+    p->coins_carried += map_of_coins[new_y][new_x];
+    map_of_coins[new_y][new_x] = 0;
+    mvaddch(p->y_pos, p->x_pos, map_for_check[p->y_pos][p->x_pos]);
+    map[p->y_pos][p->x_pos] = map_for_check[p->y_pos][p->x_pos];
+    p->y_pos = new_y;
+    p->x_pos = new_x;
+    map[p->y_pos][p->x_pos] = p->player_icon;
 }
