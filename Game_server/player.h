@@ -44,5 +44,6 @@ void handle_player_move(struct player_map *p);
 void handle_okay_move (struct player_map *p, int new_x, int new_y);
 void handle_bushes_move (struct player_map *p, int new_x, int new_y);
 void handle_coin_move (struct player_map *p, int new_x, int new_y);
+void handle_camp_move (struct player_map *p);
 
 #endif //GAME_SERVER_PLAYER_H

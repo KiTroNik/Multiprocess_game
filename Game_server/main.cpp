@@ -142,16 +142,22 @@ int main() {
         player_2->round_number++;
 
         serv_input = getch();
-
+        handle_server_move(serv_input);
         handle_player_move(player_1);
         handle_player_move(player_2);
 
-    } while (player_1->input != 'q' && player_2->input != 'q');
+    } while (player_1->input != 'q' && player_2->input != 'q' && serv_input != 'q');
 
     if (player_1->input == 'q') {
         sem_wait(&player_2->sem_2);
         player_2->is_end = 1;
     } else if (player_2->input == 'q') {
+        sem_wait(&player_1->sem_2);
+        player_1->is_end = 1;
+    } else {
+        sem_wait(&player_2->sem_2);
+        player_2->is_end = 1;
+
         sem_wait(&player_1->sem_2);
         player_1->is_end = 1;
     }

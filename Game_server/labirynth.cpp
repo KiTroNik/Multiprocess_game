@@ -139,3 +139,54 @@ void display_stats(struct player_map *p_1, struct player_map *p_2) {
     mvprintw(start_y++, WIDTH+4, "A    - campsite");
 }
 
+void handle_server_move(int input) {
+    switch (input) {
+        case 'c':
+            add_coin();
+            break;
+        case 't':
+            add_treasure();
+            break;
+        case 'T':
+            add_large_treasure();
+            break;
+        default:
+            break;
+    }
+}
+
+void draw_position(int *x, int *y) {
+    int good_position = 0;
+    int a, b;
+    while(good_position == 0) {
+        a = (rand() % WIDTH);
+        b = (rand() % HEIGHT);
+        if (map[b][a] == EMPTY) good_position = 1;
+    }
+    *x = a;
+    *y = b;
+}
+
+void add_coin() {
+    int x, y;
+    draw_position(&x, &y);
+    map[y][x] = 'c';
+    mvaddch(y, x, 'c');
+    map_of_coins[y][x] = 1;
+}
+
+void add_treasure() {
+    int x, y;
+    draw_position(&x, &y);
+    map[y][x] = 't';
+    mvaddch(y, x, 't');
+    map_of_coins[y][x] = 10;
+}
+
+void add_large_treasure() {
+    int x, y;
+    draw_position(&x, &y);
+    map[y][x] = 'T';
+    mvaddch(y, x, 'T');
+    map_of_coins[y][x] = 50;
+}

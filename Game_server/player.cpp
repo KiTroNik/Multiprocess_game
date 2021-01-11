@@ -82,6 +82,8 @@ void handle_player_move(struct player_map *p) {
                 handle_bushes_move(p, p->x_pos, p->y_pos - 1);
             } else if (is_move_coin(p->y_pos - 1, p->x_pos)) {
                 handle_coin_move(p, p->x_pos, p->y_pos - 1);
+            } else if (is_move_camp(p->y_pos - 1, p->x_pos)) {
+                handle_camp_move(p);
             }
             break;
         case KEY_DOWN:
@@ -91,6 +93,8 @@ void handle_player_move(struct player_map *p) {
                 handle_bushes_move(p, p->x_pos, p->y_pos + 1);
             } else if (is_move_coin(p->y_pos + 1, p->x_pos)) {
                 handle_coin_move(p, p->x_pos, p->y_pos + 1);
+            } else if (is_move_camp(p->y_pos + 1, p->x_pos)) {
+                handle_camp_move(p);
             }
             break;
         case KEY_LEFT:
@@ -100,6 +104,8 @@ void handle_player_move(struct player_map *p) {
                 handle_bushes_move(p, p->x_pos - 1, p->y_pos);
             } else if (is_move_coin(p->y_pos, p->x_pos - 1)) {
                 handle_coin_move(p, p->x_pos - 1, p->y_pos);
+            } else if (is_move_camp(p->y_pos, p->x_pos - 1)) {
+                handle_camp_move(p);
             }
             break;
         case KEY_RIGHT:
@@ -109,6 +115,8 @@ void handle_player_move(struct player_map *p) {
                 handle_bushes_move(p, p->x_pos + 1, p->y_pos);
             } else if (is_move_coin(p->y_pos, p->x_pos + 1)) {
                 handle_coin_move(p, p->x_pos + 1, p->y_pos);
+            } else if (is_move_camp(p->y_pos, p->x_pos + 1)) {
+                handle_camp_move(p);
             }
             break;
         default:
@@ -145,4 +153,9 @@ void handle_coin_move (struct player_map *p, int new_x, int new_y) {
     p->y_pos = new_y;
     p->x_pos = new_x;
     map[p->y_pos][p->x_pos] = p->player_icon;
+}
+
+void handle_camp_move (struct player_map *p) {
+    p->coins_in_camp += p->coins_carried;
+    p->coins_carried = 0;
 }

@@ -29,4 +29,10 @@ int is_move_camp (int y, int x);
 void display_stats (struct player_map *p_1, struct player_map *p_2);
 void display_map ();
 
+void handle_server_move(int input);
+void draw_position(int *x, int *y);
+void add_coin();
+void add_treasure();
+void add_large_treasure();
+
 #endif //GAME_SERVER_LABIRYNTH_H
