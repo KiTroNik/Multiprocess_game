@@ -31,4 +31,16 @@ stdlib.h
 -
 string
 -
+player.h
+/home/jakub/CLionProjects/Game_client/player.h
+
+/home/jakub/CLionProjects/Game_client/player.cpp
+player.h
+/home/jakub/CLionProjects/Game_client/player.h
+
+/home/jakub/CLionProjects/Game_client/player.h
+semaphore.h
+-
+ncurses.h
+-
 

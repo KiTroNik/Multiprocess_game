@@ -85,6 +85,12 @@
 		<Unit filename="/home/jakub/CLionProjects/Game_client/main.cpp">
 			<Option target="Game_client"/>
 		</Unit>
+		<Unit filename="/home/jakub/CLionProjects/Game_client/player.cpp">
+			<Option target="Game_client"/>
+		</Unit>
+		<Unit filename="/home/jakub/CLionProjects/Game_client/player.h">
+			<Option target="Game_client"/>
+		</Unit>
 		<Unit filename="/home/jakub/CLionProjects/Game_client/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>

@@ -1,5 +1,6 @@
 file(REMOVE_RECURSE
   "CMakeFiles/Game_client.dir/main.cpp.o"
+  "CMakeFiles/Game_client.dir/player.cpp.o"
   "Game_client"
   "Game_client.pdb"
 )

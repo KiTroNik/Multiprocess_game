@@ -3,3 +3,7 @@
 
 CMakeFiles/Game_client.dir/main.cpp.o
  /home/jakub/CLionProjects/Game_client/main.cpp
+ /home/jakub/CLionProjects/Game_client/player.h
+CMakeFiles/Game_client.dir/player.cpp.o
+ /home/jakub/CLionProjects/Game_client/player.cpp
+ /home/jakub/CLionProjects/Game_client/player.h

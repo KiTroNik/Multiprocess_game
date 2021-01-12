@@ -10,33 +10,10 @@
 #include <iostream>
 #include <stdlib.h>
 #include <string>
+#include "player.h"
 
 using namespace std;
 
-#define WIDTH  50
-
-void display_stats (struct player_map *p_1);
-void *get_input (void *arg);
-
-struct player_map {
-    char pl_map[5][5];
-    sem_t sem_1;
-    sem_t sem_2;
-    sem_t sem_3;
-    int input;
-    char player_icon;
-    int deaths;
-    int coins_carried;
-    int coins_in_camp;
-    int x_pos;
-    int y_pos;
-    int x_resp;
-    int y_resp;
-    int round_number;
-    int pid;
-    int server_pid;
-    int is_end;
-};
 
 int main() {
     //sprawdzanie numeru gracza
@@ -122,22 +99,13 @@ int main() {
     while(1) {
         if (p_map->is_end == 1) break;
         sem_post(&p_map->sem_2);
-
         sem_wait(&p_map->sem_1);
         flushinp();
-        clear();
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 5; j++) {
-                printw("%c", p_map->pl_map[i][j]);
-            }
-            move(i+1, 0);
-        }
-
+        display_map(p_map);
         display_stats(p_map);
         p_map->input = getch();
         if (p_map->input == 'q') break;
     }
-
 
     endwin();
 
@@ -148,29 +116,3 @@ int main() {
     return 0;
 }
 
-
-void display_stats(struct player_map *p_1) {
-    int start_y = 0;
-    mvprintw(start_y++, WIDTH+3, "Server's PID: %d", p_1->server_pid);
-    mvprintw(start_y++, WIDTH+4, "Campsite X/Y: 23/11");
-    mvprintw(start_y++, WIDTH+4, "Round number: %d", p_1->round_number);
-    start_y++;
-    mvprintw(start_y++, WIDTH+3, "Player");
-    mvprintw(start_y++, WIDTH+4, "Number:     %c", p_1->player_icon); // todo: zmienic na PID
-    mvprintw(start_y++, WIDTH+4, "Type:       HUMAN");
-    mvprintw(start_y++, WIDTH+4, "Curr X/Y    %2d/%2d", p_1->x_pos, p_1->y_pos);
-    mvprintw(start_y++, WIDTH+4, "Deaths      %d", p_1->deaths);
-    start_y++;
-    mvprintw(start_y++, WIDTH+4, "Coins found %d", p_1->coins_carried);
-    mvprintw(start_y++, WIDTH+4, "Coins brought %d", p_1->coins_in_camp);
-    start_y += 3;
-    mvprintw(start_y++, WIDTH+3, "Legend:");
-    mvprintw(start_y++, WIDTH+4, "12   - players");
-    mvprintw(start_y++, WIDTH+4, "#    - wall");
-    mvprintw(start_y++, WIDTH+4, "~    - bushes (slow down)");
-    mvprintw(start_y++, WIDTH+4, "*    - wild beast");
-    mvprintw(start_y++, WIDTH+4, "c    - one coin                  D - dropped treasure");
-    mvprintw(start_y++, WIDTH+4, "t    - treasure (10 coins)");
-    mvprintw(start_y++, WIDTH+4, "T    - large treasure (50 coins)");
-    mvprintw(start_y, WIDTH+4, "A    - campsite");
-}
