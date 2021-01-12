@@ -143,6 +143,33 @@ Game_server/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Game_server.dir/build.make CMakeFiles/Game_server.dir/build
 .PHONY : Game_server/fast
 
+beast.o: beast.cpp.o
+
+.PHONY : beast.o
+
+# target to build an object file
+beast.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Game_server.dir/build.make CMakeFiles/Game_server.dir/beast.cpp.o
+.PHONY : beast.cpp.o
+
+beast.i: beast.cpp.i
+
+.PHONY : beast.i
+
+# target to preprocess a source file
+beast.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Game_server.dir/build.make CMakeFiles/Game_server.dir/beast.cpp.i
+.PHONY : beast.cpp.i
+
+beast.s: beast.cpp.s
+
+.PHONY : beast.s
+
+# target to generate assembly for a file
+beast.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Game_server.dir/build.make CMakeFiles/Game_server.dir/beast.cpp.s
+.PHONY : beast.cpp.s
+
 labirynth.o: labirynth.cpp.o
 
 .PHONY : labirynth.o
@@ -233,6 +260,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... Game_server"
+	@echo "... beast.o"
+	@echo "... beast.i"
+	@echo "... beast.s"
 	@echo "... labirynth.o"
 	@echo "... labirynth.i"
 	@echo "... labirynth.s"

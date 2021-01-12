@@ -1,4 +1,5 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/Game_server.dir/beast.cpp.o"
   "CMakeFiles/Game_server.dir/labirynth.cpp.o"
   "CMakeFiles/Game_server.dir/main.cpp.o"
   "CMakeFiles/Game_server.dir/player.cpp.o"

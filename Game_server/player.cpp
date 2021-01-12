@@ -90,6 +90,7 @@ void handle_player_move(struct player_map *p, struct player_map *p2) {
         default:
             break;
     }
+    move_player (p);
 }
 
 void make_move(int x, int y, struct player_map *p1, struct player_map *p2) {
@@ -104,6 +105,17 @@ void make_move(int x, int y, struct player_map *p1, struct player_map *p2) {
     } else if (is_move_other_player(y, x, p2->player_icon)) {
         handle_col_of_players(p1, p2);
     }
+}
+
+void move_player(struct player_map *p) {
+    mvaddch(p->y_pos, p->x_pos, p->player_icon);
+    move(p->y_pos, p->x_pos);
+    refresh();
+
+    fill_user_map(p, p->x_pos, p->y_pos);
+    sem_post(&p->sem_1);
+
+    p->round_number++;
 }
 
 void handle_okay_move (struct player_map *p, int new_x, int new_y) {

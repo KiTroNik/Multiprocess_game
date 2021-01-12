@@ -11,14 +11,16 @@
 
 #include "labirynth.h"
 #include "player.h"
+#include "beast.h"
 
 using namespace std;
 
 #define WAIT 'w'
+pthread_mutex_t	mutex = PTHREAD_MUTEX_INITIALIZER;
 
 void clear_moves(int *s_m, int *p1_m, int *p2_m);
-void move_player(struct player_map *p);
 void send_end_game_to_players(struct player_map *player_1, struct player_map *player_2);
+void* handle_beast_move (void* arg);
 
 int main() {
     srand(time(NULL));
@@ -30,7 +32,7 @@ int main() {
         return -1;
     }
 
-    int mem_num = shm_open("mem_num", O_CREAT | O_EXCL | O_RDWR, 0777);
+    int mem_num = shm_open("mem_num", O_CREAT | O_RDWR, 0777);
     if (mem_num == -1) {
         cout << "shm_open failed";
         return -1;
@@ -56,7 +58,7 @@ int main() {
         return -1;
     }
 
-    int shm_pl1 = shm_open(shm_name_player_1, O_CREAT | O_EXCL | O_RDWR, 0777);
+    int shm_pl1 = shm_open(shm_name_player_1, O_CREAT | O_RDWR, 0777);
     if (shm_pl1 == -1) {
         cout << "shm_open failed";
         return -1;
@@ -86,7 +88,7 @@ int main() {
         return -1;
     }
 
-    int shm_pl2 = shm_open(shm_name_player_2, O_CREAT | O_EXCL | O_RDWR, 0777);
+    int shm_pl2 = shm_open(shm_name_player_2, O_CREAT | O_RDWR, 0777);
     if (shm_pl2 == -1) {
         cout << "shm_open failed";
         return -1;
@@ -105,33 +107,43 @@ int main() {
         return -1;
     }
 
-    create_player(player_2, '2');
-    sem_post(sem_memory_pl2);
+    create_player (player_2, '2');
+    sem_post (sem_memory_pl2);
 
     cout << "Waiting for two players to join in..." << endl;
-    sem_wait(&player_1->sem_3);
-    sem_wait(&player_2->sem_3);
+    sem_wait (&player_1->sem_3);
+    sem_wait (&player_2->sem_3);
 
-    initscr();
-    timeout(1000);
-    keypad(stdscr, true);
-    noecho();
+    // beast
+    struct beast enemy;
+    create_beast(&enemy);
+    pthread_t beast_thread;
+    pthread_create (&beast_thread, NULL, handle_beast_move, (void *)&enemy);
 
-    display_map();
+    initscr ();
+    timeout (1000);
+    keypad (stdscr, true);
+    noecho ();
+
+    display_map ();
 
     //main game loop
     int serv_input;
     do {
-        clear_moves(&serv_input, &player_1->input, &player_2->input);
-        display_stats(player_1, player_2);
+        clear_moves (&serv_input, &player_1->input, &player_2->input);
+        display_stats (player_1, player_2);
 
-        move_player(player_1);
-        move_player(player_2);
+        serv_input = getch ();
+        handle_server_move (serv_input);
+        handle_player_move (player_1, player_2);
+        handle_player_move (player_2, player_1);
+        sem_post(&enemy.sem_beast);
 
-        serv_input = getch();
-        handle_server_move(serv_input);
-        handle_player_move(player_1, player_2);
-        handle_player_move(player_2, player_1);
+        // testowe wyswietlanie bestii
+        mvaddch(enemy.y_pos, enemy.x_pos, '*');
+        mvaddch(enemy.y_prev, enemy.x_prev, ' ');
+        mvprintw(0, WIDTH + 2, "%d %d", enemy.y_pos, enemy.x_pos);
+        refresh();
 
     } while (player_1->input != 'q' && player_2->input != 'q' && serv_input != 'q');
 
@@ -140,34 +152,23 @@ int main() {
     endwin();
 
     // clearing after shared memory
-    shm_unlink("mem_num");
-    shm_unlink(shm_name_player_1);
-    shm_unlink(shm_name_player_2);
-    sem_close(sem_memory_pl1);
-    sem_close(sem_memory_pl2);
-    sem_close(num_play);
-    destroy_semaphores(player_1);
-    destroy_semaphores(player_2);
-    munmap(player_1, sizeof(struct player_map));
-    munmap(player_2, sizeof(struct player_map));
-    munmap(number_of_player, sizeof(int));
+    shm_unlink ("mem_num");
+    shm_unlink (shm_name_player_1);
+    shm_unlink (shm_name_player_2);
+    sem_close (sem_memory_pl1);
+    sem_close (sem_memory_pl2);
+    sem_close (num_play);
+    destroy_semaphores (player_1);
+    destroy_semaphores (player_2);
+    munmap (player_1, sizeof(struct player_map));
+    munmap (player_2, sizeof(struct player_map));
+    munmap (number_of_player, sizeof(int));
     return 0;
 }
 
 void clear_moves(int *s_m, int *p1_m, int *p2_m) {
     flushinp();
     *s_m = *p1_m = *p2_m = WAIT;
-}
-
-void move_player(struct player_map *p) {
-    mvaddch(p->y_pos, p->x_pos, p->player_icon);
-    move(p->y_pos, p->x_pos);
-    refresh();
-
-    fill_user_map(p, p->x_pos, p->y_pos);
-    sem_post(&p->sem_1);
-
-    p->round_number++;
 }
 
 void send_end_game_to_players(struct player_map *player_1, struct player_map *player_2) {
@@ -183,5 +184,22 @@ void send_end_game_to_players(struct player_map *player_1, struct player_map *pl
 
         sem_wait(&player_1->sem_2);
         player_1->is_end = 1;
+    }
+}
+
+void* handle_beast_move (void* arg) {
+    struct beast *en = (struct beast *)(arg);
+    while(1) {
+        sem_wait(&en->sem_beast);
+        pthread_mutex_lock(&mutex);
+        if (map[en->y_pos][en->x_pos + 1] != '#') {
+            en->y_prev = en->y_pos;
+            en->x_prev = en->x_pos;
+            map[en->y_pos][en->x_pos] = map_for_check[en->y_pos][en->x_pos];
+            en->y_pos = en->y_pos;
+            en->x_pos = en->x_pos + 1;
+            map[en->y_pos][en->x_pos] = '*';
+        }
+        pthread_mutex_unlock(&mutex);
     }
 }

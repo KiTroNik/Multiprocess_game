@@ -82,6 +82,12 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/home/jakub/CLionProjects/Game_server/beast.cpp">
+			<Option target="Game_server"/>
+		</Unit>
+		<Unit filename="/home/jakub/CLionProjects/Game_server/beast.h">
+			<Option target="Game_server"/>
+		</Unit>
 		<Unit filename="/home/jakub/CLionProjects/Game_server/labirynth.cpp">
 			<Option target="Game_server"/>
 		</Unit>
