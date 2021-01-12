@@ -14,7 +14,11 @@
 
 using namespace std;
 
-void display_stats(struct player_map *p_1, struct player_map *p_2);
+#define WAIT 'w'
+
+void clear_moves(int *s_m, int *p1_m, int *p2_m);
+void move_player(struct player_map *p);
+void send_end_game_to_players(struct player_map *player_1, struct player_map *player_2);
 
 int main() {
     srand(time(NULL));
@@ -26,7 +30,7 @@ int main() {
         return -1;
     }
 
-    int mem_num = shm_open("mem_num", O_CREAT | O_RDWR, 0777);
+    int mem_num = shm_open("mem_num", O_CREAT | O_EXCL | O_RDWR, 0777);
     if (mem_num == -1) {
         cout << "shm_open failed";
         return -1;
@@ -52,7 +56,7 @@ int main() {
         return -1;
     }
 
-    int shm_pl1 = shm_open(shm_name_player_1, O_CREAT | O_RDWR, 0777);
+    int shm_pl1 = shm_open(shm_name_player_1, O_CREAT | O_EXCL | O_RDWR, 0777);
     if (shm_pl1 == -1) {
         cout << "shm_open failed";
         return -1;
@@ -82,7 +86,7 @@ int main() {
         return -1;
     }
 
-    int shm_pl2 = shm_open(shm_name_player_2, O_CREAT | O_RDWR, 0777);
+    int shm_pl2 = shm_open(shm_name_player_2, O_CREAT | O_EXCL | O_RDWR, 0777);
     if (shm_pl2 == -1) {
         cout << "shm_open failed";
         return -1;
@@ -118,28 +122,11 @@ int main() {
     //main game loop
     int serv_input;
     do {
-        flushinp();
-        player_1->input = 'n';
-        player_2->input = 'n';
-        serv_input = 'n';
-
+        clear_moves(&serv_input, &player_1->input, &player_2->input);
         display_stats(player_1, player_2);
-        mvaddch(player_1->y_pos, player_1->x_pos, player_1->player_icon);
-        move(player_1->y_pos, player_1->x_pos);
-        refresh();
 
-        mvaddch(player_2->y_pos, player_2->x_pos, player_2->player_icon);
-        move(player_2->y_pos, player_2->x_pos);
-        refresh();
-
-        fill_user_map(player_1, player_1->x_pos, player_1->y_pos);
-        sem_post(&player_1->sem_1);
-
-        fill_user_map(player_2, player_2->x_pos, player_2->y_pos);
-        sem_post(&player_2->sem_1);
-
-        player_1->round_number++;
-        player_2->round_number++;
+        move_player(player_1);
+        move_player(player_2);
 
         serv_input = getch();
         handle_server_move(serv_input);
@@ -148,6 +135,42 @@ int main() {
 
     } while (player_1->input != 'q' && player_2->input != 'q' && serv_input != 'q');
 
+    send_end_game_to_players(player_1, player_2);
+
+    endwin();
+
+    // clearing after shared memory
+    shm_unlink("mem_num");
+    shm_unlink(shm_name_player_1);
+    shm_unlink(shm_name_player_2);
+    sem_close(sem_memory_pl1);
+    sem_close(sem_memory_pl2);
+    sem_close(num_play);
+    destroy_semaphores(player_1);
+    destroy_semaphores(player_2);
+    munmap(player_1, sizeof(struct player_map));
+    munmap(player_2, sizeof(struct player_map));
+    munmap(number_of_player, sizeof(int));
+    return 0;
+}
+
+void clear_moves(int *s_m, int *p1_m, int *p2_m) {
+    flushinp();
+    *s_m = *p1_m = *p2_m = WAIT;
+}
+
+void move_player(struct player_map *p) {
+    mvaddch(p->y_pos, p->x_pos, p->player_icon);
+    move(p->y_pos, p->x_pos);
+    refresh();
+
+    fill_user_map(p, p->x_pos, p->y_pos);
+    sem_post(&p->sem_1);
+
+    p->round_number++;
+}
+
+void send_end_game_to_players(struct player_map *player_1, struct player_map *player_2) {
     if (player_1->input == 'q') {
         sem_wait(&player_2->sem_2);
         player_2->is_end = 1;
@@ -161,20 +184,4 @@ int main() {
         sem_wait(&player_1->sem_2);
         player_1->is_end = 1;
     }
-
-    endwin();
-
-    // clearing after shared memory
-    shm_unlink("my_shm");
-    shm_unlink("mem_num");
-    shm_unlink(shm_name_player_1);
-    shm_unlink(shm_name_player_2);
-    sem_close(sem_memory_pl1);
-    sem_close(num_play);
-    destroy_semaphores(player_1);
-    destroy_semaphores(player_2);
-    munmap(player_1, sizeof(struct player_map));
-    munmap(player_2, sizeof(struct player_map));
-    munmap(number_of_player, sizeof(int));
-    return 0;
 }

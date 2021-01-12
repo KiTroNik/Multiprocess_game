@@ -6,15 +6,15 @@
 
 #IncludeRegexTransform: 
 
-/home/jakub/CLionProjects/Game_server/labirynth.cpp
-labirynth.h
-/home/jakub/CLionProjects/Game_server/labirynth.h
-
 /home/jakub/CLionProjects/Game_server/labirynth.h
 vector
 -
 ncurses.h
 -
+player.h
+/home/jakub/CLionProjects/Game_server/player.h
+
+/home/jakub/CLionProjects/Game_server/player.cpp
 player.h
 /home/jakub/CLionProjects/Game_server/player.h
 

@@ -76,59 +76,33 @@ void destroy_semaphores (struct player_map *p) {
 void handle_player_move(struct player_map *p, struct player_map *p2) {
     switch (p->input) {
         case KEY_UP:
-            if (is_move_okay(p->y_pos - 1, p->x_pos)) {
-                handle_okay_move(p, p->x_pos, p->y_pos - 1);
-            } else if (is_move_bushes(p->y_pos - 1, p->x_pos)) {
-                handle_bushes_move(p, p->x_pos, p->y_pos - 1);
-            } else if (is_move_coin(p->y_pos - 1, p->x_pos)) {
-                handle_coin_move(p, p->x_pos, p->y_pos - 1);
-            } else if (is_move_camp(p->y_pos - 1, p->x_pos)) {
-                handle_camp_move(p, p->x_pos, p->y_pos - 1);
-            } else if (is_move_other_player(p->y_pos - 1, p->x_pos, p2->player_icon)) {
-                handle_col_of_players(p, p2);
-            }
+            make_move(p->x_pos, p->y_pos-1, p, p2);
             break;
         case KEY_DOWN:
-            if (is_move_okay(p->y_pos + 1, p->x_pos)) {
-                handle_okay_move(p, p->x_pos, p->y_pos + 1);
-            } else if (is_move_bushes(p->y_pos + 1, p->x_pos)) {
-                handle_bushes_move(p, p->x_pos, p->y_pos + 1);
-            } else if (is_move_coin(p->y_pos + 1, p->x_pos)) {
-                handle_coin_move(p, p->x_pos, p->y_pos + 1);
-            } else if (is_move_camp(p->y_pos + 1, p->x_pos)) {
-                handle_camp_move(p, p->x_pos, p->y_pos + 1);
-            } else if (is_move_other_player(p->y_pos + 1, p->x_pos, p2->player_icon)) {
-                handle_col_of_players(p, p2);
-            }
+            make_move(p->x_pos, p->y_pos+1, p, p2);
             break;
         case KEY_LEFT:
-            if (is_move_okay(p->y_pos, p->x_pos - 1)) {
-                handle_okay_move(p, p->x_pos - 1, p->y_pos);
-            } else if (is_move_bushes(p->y_pos, p->x_pos - 1)) {
-                handle_bushes_move(p, p->x_pos - 1, p->y_pos);
-            } else if (is_move_coin(p->y_pos, p->x_pos - 1)) {
-                handle_coin_move(p, p->x_pos - 1, p->y_pos);
-            } else if (is_move_camp(p->y_pos, p->x_pos - 1)) {
-                handle_camp_move(p, p->x_pos - 1, p->y_pos);
-            } else if (is_move_other_player(p->y_pos, p->x_pos - 1, p2->player_icon)) {
-                handle_col_of_players(p, p2);
-            }
+            make_move(p->x_pos-1, p->y_pos, p, p2);
             break;
         case KEY_RIGHT:
-            if (is_move_okay(p->y_pos, p->x_pos + 1)) {
-                handle_okay_move(p, p->x_pos + 1, p->y_pos);
-            } else if (is_move_bushes(p->y_pos, p->x_pos + 1)) {
-                handle_bushes_move(p, p->x_pos + 1, p->y_pos);
-            } else if (is_move_coin(p->y_pos, p->x_pos + 1)) {
-                handle_coin_move(p, p->x_pos + 1, p->y_pos);
-            } else if (is_move_camp(p->y_pos, p->x_pos + 1)) {
-                handle_camp_move(p, p->x_pos + 1, p->y_pos);
-            } else if (is_move_other_player(p->y_pos, p->x_pos + 1, p2->player_icon)) {
-                handle_col_of_players(p, p2);
-            }
+            make_move(p->x_pos+1, p->y_pos, p, p2);
             break;
         default:
             break;
+    }
+}
+
+void make_move(int x, int y, struct player_map *p1, struct player_map *p2) {
+    if (is_move_okay(y, x)) {
+        handle_okay_move(p1, x, y);
+    } else if (is_move_bushes(y, x)) {
+        handle_bushes_move(p1, x, y);
+    } else if (is_move_coin(y, x)) {
+        handle_coin_move(p1, x, y);
+    } else if (is_move_camp(y, x)) {
+        handle_camp_move(p1, x, y);
+    } else if (is_move_other_player(y, x, p2->player_icon)) {
+        handle_col_of_players(p1, p2);
     }
 }
 

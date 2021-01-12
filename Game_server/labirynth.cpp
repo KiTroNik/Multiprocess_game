@@ -140,7 +140,7 @@ void display_stats(struct player_map *p_1, struct player_map *p_2) {
     mvprintw(start_y++, WIDTH+4, "c    - one coin                  D - dropped treasure");
     mvprintw(start_y++, WIDTH+4, "t    - treasure (10 coins)");
     mvprintw(start_y++, WIDTH+4, "T    - large treasure (50 coins)");
-    mvprintw(start_y++, WIDTH+4, "A    - campsite");
+    mvprintw(start_y, WIDTH+4, "A    - campsite");
 }
 
 void handle_server_move(int input) {
