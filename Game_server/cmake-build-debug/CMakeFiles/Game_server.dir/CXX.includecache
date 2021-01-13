@@ -6,11 +6,15 @@
 
 #IncludeRegexTransform: 
 
+/home/jakub/CLionProjects/Game_server/beast.cpp
+beast.h
+/home/jakub/CLionProjects/Game_server/beast.h
+
 /home/jakub/CLionProjects/Game_server/beast.h
 semaphore.h
 -
-
-/home/jakub/CLionProjects/Game_server/labirynth.cpp
+ncurses.h
+-
 labirynth.h
 /home/jakub/CLionProjects/Game_server/labirynth.h
 
@@ -49,10 +53,6 @@ player.h
 /home/jakub/CLionProjects/Game_server/player.h
 beast.h
 /home/jakub/CLionProjects/Game_server/beast.h
-
-/home/jakub/CLionProjects/Game_server/player.cpp
-player.h
-/home/jakub/CLionProjects/Game_server/player.h
 
 /home/jakub/CLionProjects/Game_server/player.h
 semaphore.h

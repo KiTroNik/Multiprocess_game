@@ -138,12 +138,7 @@ int main() {
         handle_player_move (player_1, player_2);
         handle_player_move (player_2, player_1);
         sem_post(&enemy.sem_beast);
-
-        // testowe wyswietlanie bestii
-        mvaddch(enemy.y_pos, enemy.x_pos, '*');
-        mvaddch(enemy.y_prev, enemy.x_prev, ' ');
-        mvprintw(0, WIDTH + 2, "%d %d", enemy.y_pos, enemy.x_pos);
-        refresh();
+        display_beast_move(&enemy);
 
     } while (player_1->input != 'q' && player_2->input != 'q' && serv_input != 'q');
 
@@ -160,6 +155,7 @@ int main() {
     sem_close (num_play);
     destroy_semaphores (player_1);
     destroy_semaphores (player_2);
+    destroy_beast (&enemy);
     munmap (player_1, sizeof(struct player_map));
     munmap (player_2, sizeof(struct player_map));
     munmap (number_of_player, sizeof(int));
@@ -181,25 +177,21 @@ void send_end_game_to_players(struct player_map *player_1, struct player_map *pl
     } else {
         sem_wait(&player_2->sem_2);
         player_2->is_end = 1;
-
         sem_wait(&player_1->sem_2);
         player_1->is_end = 1;
     }
 }
+
 
 void* handle_beast_move (void* arg) {
     struct beast *en = (struct beast *)(arg);
     while(1) {
         sem_wait(&en->sem_beast);
         pthread_mutex_lock(&mutex);
-        if (map[en->y_pos][en->x_pos + 1] != '#') {
-            en->y_prev = en->y_pos;
-            en->x_prev = en->x_pos;
-            map[en->y_pos][en->x_pos] = map_for_check[en->y_pos][en->x_pos];
-            en->y_pos = en->y_pos;
-            en->x_pos = en->x_pos + 1;
-            map[en->y_pos][en->x_pos] = '*';
-        }
+        check_left(en);
+        check_right(en);
+        check_top(en);
+        check_bottom(en);
         pthread_mutex_unlock(&mutex);
     }
 }

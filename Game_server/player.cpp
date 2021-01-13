@@ -105,7 +105,7 @@ void make_move(int x, int y, struct player_map *p1, struct player_map *p2) {
     } else if (is_move_other_player(y, x, p2->player_icon)) {
         handle_col_of_players(p1, p2);
     } else if (is_move_beast(y, x)) {
-        handle_beast_move (p1, x, y);
+        handle_beast_move (p1);
     }
 }
 
@@ -184,7 +184,7 @@ void handle_col_of_players (struct player_map *p, struct player_map *p2) {
     map[p2->y_pos][p2->x_pos] = p2->player_icon;
 }
 
-void handle_beast_move (struct player_map *p, int new_x, int new_y) {
+void handle_beast_move (struct player_map *p) {
     map_of_coins[p->y_pos][p->x_pos] = p->coins_carried;
     p->coins_carried = 0;
     p->deaths += 1;

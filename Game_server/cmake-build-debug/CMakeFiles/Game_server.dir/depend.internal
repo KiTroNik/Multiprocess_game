@@ -4,6 +4,8 @@
 CMakeFiles/Game_server.dir/beast.cpp.o
  /home/jakub/CLionProjects/Game_server/beast.cpp
  /home/jakub/CLionProjects/Game_server/beast.h
+ /home/jakub/CLionProjects/Game_server/labirynth.h
+ /home/jakub/CLionProjects/Game_server/player.h
 CMakeFiles/Game_server.dir/labirynth.cpp.o
  /home/jakub/CLionProjects/Game_server/labirynth.cpp
  /home/jakub/CLionProjects/Game_server/labirynth.h

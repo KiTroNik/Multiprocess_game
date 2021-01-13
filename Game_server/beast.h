@@ -2,6 +2,8 @@
 #define GAME_SERVER_BEAST_H
 
 #include <semaphore.h>
+#include <ncurses.h>
+#include "labirynth.h"
 
 #define BEAST '*'
 
@@ -15,5 +17,11 @@ struct beast {
 
 void create_beast(struct beast *b);
 void destroy_beast (struct beast *b);
+void display_beast_move(struct beast *b);
+
+void check_left(struct beast *b);
+void check_right(struct beast *b);
+void check_top(struct beast *b);
+void check_bottom(struct beast *b);
 
 #endif //GAME_SERVER_BEAST_H
