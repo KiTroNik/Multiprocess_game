@@ -14,6 +14,8 @@ using namespace std;
 #define LARGE_TREASURE 'T'
 #define CAMP 'A'
 #define DROP 'D'
+#define BEAST '*'
+
 #define HEIGHT 24
 #define WIDTH  50
 
@@ -27,6 +29,8 @@ int is_move_bushes (int y, int x);
 int is_move_coin (int y, int x);
 int is_move_camp (int y, int x);
 int is_move_other_player (int y, int x, char icon);
+int is_move_beast(int y, int x);
+
 void display_stats (struct player_map *p_1, struct player_map *p_2);
 void display_map ();
 

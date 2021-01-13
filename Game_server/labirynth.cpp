@@ -107,6 +107,10 @@ int is_move_other_player (int y, int x, char icon) {
     return ((mvinch(y, x) & A_CHARTEXT) == icon);
 }
 
+int is_move_beast (int y, int x) {
+    return ((mvinch(y, x) & A_CHARTEXT) == BEAST);
+}
+
 void display_map() {
     for (int i = 0; i < HEIGHT+1; i++) {
         for (int j = 0; j < WIDTH+1; j++) {

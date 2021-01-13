@@ -104,6 +104,8 @@ void make_move(int x, int y, struct player_map *p1, struct player_map *p2) {
         handle_camp_move(p1, x, y);
     } else if (is_move_other_player(y, x, p2->player_icon)) {
         handle_col_of_players(p1, p2);
+    } else if (is_move_beast(y, x)) {
+        handle_beast_move (p1, x, y);
     }
 }
 
@@ -167,11 +169,11 @@ void handle_col_of_players (struct player_map *p, struct player_map *p2) {
     p->deaths += 1;
     p2->deaths += 1;
 
-    mvaddch(p->y_pos, p->x_pos, ' ');
+    mvaddch(p->y_pos, p->x_pos, EMPTY);
     map[p->y_pos][p->x_pos] = map_for_check[p->y_pos][p->x_pos];
 
-    mvaddch(p2->y_pos, p2->x_pos, 'D');
-    map[p2->y_pos][p2->x_pos] = 'D';
+    mvaddch(p2->y_pos, p2->x_pos, DROP);
+    map[p2->y_pos][p2->x_pos] = DROP;
 
     p->y_pos = p->y_resp;
     p->x_pos = p->x_resp;
@@ -180,4 +182,17 @@ void handle_col_of_players (struct player_map *p, struct player_map *p2) {
     p2->y_pos = p2->y_resp;
     p2->x_pos = p2->x_resp;
     map[p2->y_pos][p2->x_pos] = p2->player_icon;
+}
+
+void handle_beast_move (struct player_map *p, int new_x, int new_y) {
+    map_of_coins[p->y_pos][p->x_pos] = p->coins_carried;
+    p->coins_carried = 0;
+    p->deaths += 1;
+
+    mvaddch(p->y_pos, p->x_pos, DROP);
+    map[p->y_pos][p->x_pos] = map_for_check[p->y_pos][p->x_pos];
+
+    p->y_pos = p->y_resp;
+    p->x_pos = p->x_resp;
+    map[p->y_pos][p->x_pos] = p->player_icon;
 }
