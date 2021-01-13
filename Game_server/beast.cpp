@@ -5,6 +5,8 @@ void create_beast(struct beast *b) {
     b->x_pos = 5;
     b->y_prev = 1;
     b->x_prev = 6;
+    b->dead_first = 0;
+    b->dead_second = 0;
     sem_init(&b->sem_beast, 1, 0);
 }
 

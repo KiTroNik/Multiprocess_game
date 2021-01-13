@@ -4,6 +4,7 @@
 #include <semaphore.h>
 #include <ncurses.h>
 #include "labirynth.h"
+#include "player.h"
 
 #define BEAST '*'
 
@@ -13,6 +14,9 @@ struct beast {
     int y_pos;
     int x_prev;
     int y_prev;
+
+    int dead_first;
+    int dead_second;
 };
 
 void create_beast(struct beast *b);
