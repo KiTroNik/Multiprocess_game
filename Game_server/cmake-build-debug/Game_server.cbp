@@ -103,6 +103,12 @@
 		<Unit filename="/home/jakub/CLionProjects/Game_server/player.h">
 			<Option target="Game_server"/>
 		</Unit>
+		<Unit filename="/home/jakub/CLionProjects/Game_server/server.cpp">
+			<Option target="Game_server"/>
+		</Unit>
+		<Unit filename="/home/jakub/CLionProjects/Game_server/server.h">
+			<Option target="Game_server"/>
+		</Unit>
 		<Unit filename="/home/jakub/CLionProjects/Game_server/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>

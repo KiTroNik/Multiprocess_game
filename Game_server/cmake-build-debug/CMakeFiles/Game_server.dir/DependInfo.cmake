@@ -8,6 +8,7 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/home/jakub/CLionProjects/Game_server/labirynth.cpp" "/home/jakub/CLionProjects/Game_server/cmake-build-debug/CMakeFiles/Game_server.dir/labirynth.cpp.o"
   "/home/jakub/CLionProjects/Game_server/main.cpp" "/home/jakub/CLionProjects/Game_server/cmake-build-debug/CMakeFiles/Game_server.dir/main.cpp.o"
   "/home/jakub/CLionProjects/Game_server/player.cpp" "/home/jakub/CLionProjects/Game_server/cmake-build-debug/CMakeFiles/Game_server.dir/player.cpp.o"
+  "/home/jakub/CLionProjects/Game_server/server.cpp" "/home/jakub/CLionProjects/Game_server/cmake-build-debug/CMakeFiles/Game_server.dir/server.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

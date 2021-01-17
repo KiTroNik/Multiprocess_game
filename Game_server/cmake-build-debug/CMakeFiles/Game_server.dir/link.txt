@@ -1,1 +1,1 @@
-/usr/bin/c++  -g  -pthread -lrt CMakeFiles/Game_server.dir/main.cpp.o CMakeFiles/Game_server.dir/labirynth.cpp.o CMakeFiles/Game_server.dir/player.cpp.o CMakeFiles/Game_server.dir/beast.cpp.o  -o Game_server  -lcurses /usr/lib/x86_64-linux-gnu/libform.so -lrt 
+/usr/bin/c++  -g  -pthread -lrt CMakeFiles/Game_server.dir/main.cpp.o CMakeFiles/Game_server.dir/labirynth.cpp.o CMakeFiles/Game_server.dir/player.cpp.o CMakeFiles/Game_server.dir/beast.cpp.o CMakeFiles/Game_server.dir/server.cpp.o  -o Game_server  -lcurses /usr/lib/x86_64-linux-gnu/libform.so -lrt 

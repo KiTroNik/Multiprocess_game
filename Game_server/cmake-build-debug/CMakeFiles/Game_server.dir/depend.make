@@ -14,8 +14,15 @@ CMakeFiles/Game_server.dir/main.cpp.o: ../beast.h
 CMakeFiles/Game_server.dir/main.cpp.o: ../labirynth.h
 CMakeFiles/Game_server.dir/main.cpp.o: ../main.cpp
 CMakeFiles/Game_server.dir/main.cpp.o: ../player.h
+CMakeFiles/Game_server.dir/main.cpp.o: ../server.h
 
 CMakeFiles/Game_server.dir/player.cpp.o: ../labirynth.h
 CMakeFiles/Game_server.dir/player.cpp.o: ../player.cpp
 CMakeFiles/Game_server.dir/player.cpp.o: ../player.h
+
+CMakeFiles/Game_server.dir/server.cpp.o: ../beast.h
+CMakeFiles/Game_server.dir/server.cpp.o: ../labirynth.h
+CMakeFiles/Game_server.dir/server.cpp.o: ../player.h
+CMakeFiles/Game_server.dir/server.cpp.o: ../server.cpp
+CMakeFiles/Game_server.dir/server.cpp.o: ../server.h
 

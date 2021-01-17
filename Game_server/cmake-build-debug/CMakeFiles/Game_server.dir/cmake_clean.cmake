@@ -3,6 +3,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/Game_server.dir/labirynth.cpp.o"
   "CMakeFiles/Game_server.dir/main.cpp.o"
   "CMakeFiles/Game_server.dir/player.cpp.o"
+  "CMakeFiles/Game_server.dir/server.cpp.o"
   "Game_server"
   "Game_server.pdb"
 )
