@@ -32,10 +32,14 @@ int main() {
         return -1;
     }
 
-    int mem_num = shm_open("mem_num", O_CREAT | O_RDWR, 0777);
+    int mem_num = shm_open("mem_num", O_CREAT | O_EXCL  | O_RDWR, 0777);
     if (mem_num == -1) {
-        cout << "shm_open failed";
-        return -1;
+        shm_unlink ("mem_num");
+        mem_num = shm_open("mem_num", O_CREAT | O_EXCL  | O_RDWR, 0777);
+        if (mem_num == -1) {
+            cout << "shm_open failed";
+            return -1;
+        }
     }
 
     if (ftruncate(mem_num, sizeof(int)) == -1) {
@@ -58,14 +62,18 @@ int main() {
         return -1;
     }
 
-    int shm_pl1 = shm_open(shm_name_player_1, O_CREAT | O_RDWR, 0777);
+    int shm_pl1 = shm_open(shm_name_player_1, O_CREAT | O_EXCL | O_RDWR, 0777);
     if (shm_pl1 == -1) {
-        cout << "shm_open failed";
-        return -1;
+        shm_unlink (shm_name_player_1);
+        shm_pl1 = shm_open(shm_name_player_1, O_CREAT | O_EXCL | O_RDWR, 0777);
+        if (shm_pl1 == -1) {
+            cout << "shm_open failed";
+            return -1;
+        }
     }
 
     if (ftruncate(shm_pl1, sizeof(struct player_map)) == -1) {
-        cout << "ftruncate failed";
+        cout << "ftruncate failed shm_pl1";
         return -1;
     }
 
@@ -88,14 +96,18 @@ int main() {
         return -1;
     }
 
-    int shm_pl2 = shm_open(shm_name_player_2, O_CREAT | O_RDWR, 0777);
+    int shm_pl2 = shm_open(shm_name_player_2, O_CREAT | O_EXCL | O_RDWR, 0777);
     if (shm_pl2 == -1) {
-        cout << "shm_open failed";
-        return -1;
+        shm_unlink (shm_name_player_2);
+        shm_pl2 = shm_open(shm_name_player_2, O_CREAT | O_EXCL | O_RDWR, 0777);
+        if (shm_pl2 == -1) {
+            cout << "shm_open failed";
+            return -1;
+        }
     }
 
     if (ftruncate(shm_pl2, sizeof(struct player_map)) == -1) {
-        cout << "ftruncate failed";
+        cout << "ftruncate failed shm_pl2";
         return -1;
     }
 

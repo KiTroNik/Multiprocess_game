@@ -6,10 +6,6 @@
 
 #IncludeRegexTransform: 
 
-/home/jakub/CLionProjects/Game_server/beast.cpp
-beast.h
-/home/jakub/CLionProjects/Game_server/beast.h
-
 /home/jakub/CLionProjects/Game_server/beast.h
 semaphore.h
 -
